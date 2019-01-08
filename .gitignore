@@ -1,5 +1,6 @@
 /target/
 !.mvn/wrapper/maven-wrapper.jar
+!.mvn/wrapper/maven-wrapper.properties
 
 ### STS ###
 .apt_generated
@@ -32,3 +33,7 @@
 /dist/
 /nbdist/
 /.nb-gradle/
+
+### Spring Boot ###
+mvnw
+mvnw.cmd
