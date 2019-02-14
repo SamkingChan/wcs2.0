@@ -64,8 +64,8 @@ public class ConfigServiceImpl implements ConfigService {
         String zebraIp = map.get("print_ip").toString();
         String zebraPort = map.get("print_port").toString();
 
-        String printerType = map.get("printer_type").toString();
-        String zebraModel = map.get("zebra_model").toString();
+//        String printerType = map.get("printer_type").toString();
+//        String zebraModel = map.get("zebra_model").toString();
 
 //        String mqttClient = config.getMqttClient();
 //        String mqttIp = config.getMqttIp();
@@ -87,8 +87,8 @@ public class ConfigServiceImpl implements ConfigService {
         propertiesConfiguration.setProperty("impinj.power", impinjPower);
         propertiesConfiguration.setProperty("printer.ip", zebraIp);
         propertiesConfiguration.setProperty("printer.port", zebraPort);
-        propertiesConfiguration.setProperty("printer.type",printerType);
-        propertiesConfiguration.setProperty("zebra.model",zebraModel);
+//        propertiesConfiguration.setProperty("printer.type",printerType);
+//        propertiesConfiguration.setProperty("zebra.model",zebraModel);
         return true;
     }
 }

@@ -2,6 +2,7 @@ package com.ridko.wcs.controller.printer;
 
 import com.ridko.wcs.domain.printer.Label;
 import com.ridko.wcs.service.printer.PrinterService;
+import com.ridko.wcs.utils.PostekPrinter;
 import lombok.extern.java.Log;
 import org.apache.commons.configuration.PropertiesConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,10 +54,6 @@ public class PrinterController {
                             "^LL0406" +
                             "^LS0" +
                             "^CI26^SEE:GB.DAT^CW1,E:FONTR.FNT" +
-                            "^FT99,162^A1N,45,45^FH\\^FD嘉^FS" +
-                            "^FT99,214^A1N,45,45^FH\\^FD谦^FS" +
-                            "^FT99,266^A1N,45,45^FH\\^FD纺^FS" +
-                            "^FT99,318^A1N,45,45^FH\\^FD织^FS" +
                             "^FO84,29^GB780,325,2^FS" +
                             "^FO766,264^GB0,89,2^FS" +
                             "^FO617,175^GB0,179,2^FS" +
@@ -65,7 +62,6 @@ public class PrinterController {
                             "^FO155,31^GB0,324,2^FS" +
                             "^FO155,263^GB709,0,2^FS" +
                             "^FO250,30^GB0,325,2^FS" +
-                            "^FT98,88^A1N,45,45^FH\\^FDJQ^FS" +
                             "^FT526,324^A1N,42,42^FH\\^FD重量^FS" +
                             "^FT526,236^A1N,42,42^FH\\^FD色号^FS" +
                             "^FT159,148^A1N,42,42^FH\\^FD缸号^FS" +
@@ -111,17 +107,12 @@ public class PrinterController {
                     zpl += "^XA^LH84,27" +
                             "^CI26^SEE:GB.DAT^CW1,E:MSUNG24.FNT" +
                             "^MD10" +
-                            "^FT40,146^A1N,42,42^FD嘉^FS" +
-                            "^FT40,198^A1N,42,42^FD谦^FS" +
-                            "^FT40,250^A1N,42,42^FD纺^FS" +
-                            "^FT40,302^A1N,42,42^FD织^FS" +
                             "^FO30,13^GB780,325,2^FS" +
                             "^FO101,144^GB709,0,2^FS" +
                             "^FO101,237^GB709,0,2^FS" +
                             "^FO101,76^GB709,0,2^FS" +
                             "^FO195,14^GB0,324,2^FS" +
                             "^FO101,15^GB0,323,2^FS" +
-                            "^FT40,72^A1N,42,42^FDJQ^FS" +
                             "^FT468,303^A1N,36,36^FD重量^FS" +
                             "^FT468,212^A1N,36,36^FD色号^FS" +
                             "^FT100,303^A1N,36,36^FD布种^FS" +
@@ -161,7 +152,12 @@ public class PrinterController {
 
             //打印机类型为Postek时执行下面代码
         } else if ("postek".equals(printerType)) {
-            System.out.println("进入了postek打印机类型");
+            try {
+                PostekPrinter.getInstance(propertiesConfiguration.getString("printer.ip"), propertiesConfiguration.getInt("printer.port")).speed(0).printTags(labels);
+            } catch (Exception e) {
+                e.printStackTrace();
+                return ResponseEntity.status(400).body("打印机异常，请检查打印机网线或其他问题！");
+            }
         } else {
             return ResponseEntity.status(400).body("打印机类型读取出错，请检查配置文件是否正确");
         }
